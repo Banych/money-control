@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+:root {
+  height: 100%;
+  background-color: theme('backgroundColor.neutral.200');
+  color-scheme: light;
+}
