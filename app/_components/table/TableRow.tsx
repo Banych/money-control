@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { DataType, TableColumn } from './TableTypes';
 import TextTableCell from './cells/TextTableCell';
 import NumberTableCell from './cells/NumberTableCell';
+import TextInputTableCell from './cells/TextInputTableCell';
 
 export type TableRowProps<T extends DataType> = {
     columns: TableColumn<T>[];
@@ -34,6 +35,15 @@ const TableRow = <T extends DataType>(props: TableRowProps<T>) => {
                             onChange={onChange}
                         />
                     );
+                case 'input':
+                    return (
+                        <TextInputTableCell
+                            key={getCellKey(row, column)}
+                            column={column}
+                            row={row}
+                            onChange={onChange}
+                        />
+                    );
                 default:
                     return null;
             }
@@ -41,7 +51,9 @@ const TableRow = <T extends DataType>(props: TableRowProps<T>) => {
         [getCellKey, onChange],
     );
 
-    return <tr>{columns.map((column) => renderCell(row, column))}</tr>;
+    return (
+        <tr className="">{columns.map((column) => renderCell(row, column))}</tr>
+    );
 };
 
 export default TableRow;

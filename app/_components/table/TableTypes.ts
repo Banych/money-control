@@ -7,5 +7,5 @@ export type DataType = {
 export type TableColumn<T extends DataType> = {
     title: string;
     key: keyof T | 'actions';
-    type: 'text' | 'number' | 'date' | 'actions';
+    type: 'text' | 'input' | 'number' | 'date' | 'actions';
 };

@@ -1,3 +1,4 @@
+import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
 import { DataType, TableColumn } from './TableTypes';
 
@@ -11,28 +12,26 @@ export type TableProps<T extends Record<string, string | number | string[]>> = {
 const Table = <T extends DataType>(props: TableProps<T>) => {
     const { columns, data, getRowKey, onChange } = props;
     return (
-        <table className="w-full bg-white rounded-2xl">
-            <thead>
-                <tr>
-                    {columns.map((column) => (
-                        <th key={column.key as string}>{column.title}</th>
+        <div className="w-full bg-white rounded-2xl px-7">
+            <table className="w-full table-auto">
+                <thead>
+                    <TableHeaderRow columns={columns} />
+                </thead>
+                <tbody>
+                    {data.map((row) => (
+                        <TableRow
+                            key={getRowKey(row)}
+                            columns={columns}
+                            row={row}
+                            getCellKey={(row, column) =>
+                                `${getRowKey(row)}-${column.key as string}`
+                            }
+                            onChange={onChange}
+                        />
                     ))}
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((row) => (
-                    <TableRow
-                        key={getRowKey(row)}
-                        columns={columns}
-                        row={row}
-                        getCellKey={(row, column) =>
-                            `${getRowKey(row)}-${column.key as string}`
-                        }
-                        onChange={onChange}
-                    />
-                ))}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     );
 };
 
