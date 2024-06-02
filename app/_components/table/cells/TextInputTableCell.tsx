@@ -5,6 +5,8 @@ import Input from '../../Input';
 import TableCell, { TableCellProps } from '../TableCell';
 import { DataType } from '../TableTypes';
 import { cn } from '../../../../utils/cn';
+import { InputAction } from '../types/input';
+import { MdCheck, MdCheckBox, MdClose } from 'react-icons/md';
 
 export type TextInputTableCellProps<T extends DataType> = Omit<
     TableCellProps<T>,
@@ -35,6 +37,23 @@ const TextInputTableCell = <T extends DataType>({
         },
         [],
     );
+
+    const inputActions: InputAction[] = [
+        {
+            icon: MdCheck,
+            position: 'right',
+            callback: () => setIsEdit(false),
+            actionClassName: 'text-green-500',
+            size: 'sm',
+        },
+        {
+            icon: MdClose,
+            position: 'right',
+            callback: () => setIsEdit(false),
+            actionClassName: 'text-red-500',
+            size: 'sm',
+        },
+    ];
 
     if (!isEdit) {
         return (
@@ -68,6 +87,7 @@ const TextInputTableCell = <T extends DataType>({
                     className="w-full"
                     onChange={handleChange}
                     onKeyUp={handleExitEdit}
+                    actions={inputActions}
                 />
             )}
         />

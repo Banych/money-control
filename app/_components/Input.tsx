@@ -1,14 +1,26 @@
 import { cn } from '@/utils/cn';
 import { ClassValue } from 'clsx';
 import { HTMLProps, useMemo } from 'react';
+import InputAction from './InputAction';
 
 export type InputProps = Omit<HTMLProps<HTMLInputElement>, 'size'> & {
     size?: 'sm' | 'md' | 'lg';
     alignText?: 'left' | 'center' | 'right';
+    onApply?: () => void;
+    onCancel?: () => void;
+    actions?: InputAction[];
 };
 
 const Input = (props: InputProps) => {
-    const { size, className, alignText, ...otherProps } = props;
+    const {
+        size,
+        className,
+        alignText,
+        onApply,
+        onCancel,
+        actions,
+        ...otherProps
+    } = props;
 
     const classesForSize = useMemo((): ClassValue => {
         switch (size) {
@@ -35,16 +47,37 @@ const Input = (props: InputProps) => {
         }
     }, [alignText]);
 
+    const actionsLeft = actions?.filter((action) => action.position === 'left');
+
+    const actionsRight = actions?.filter(
+        (action) => action.position === 'right',
+    );
+
+    const actionClassName =
+        'absolute top-1/2 transform -translate-y-1/2 flex gap-1 items-center';
+
     return (
-        <input
-            {...otherProps}
-            className={cn(
-                className,
-                'bg-white border rounded-lg px-6 py-4 text-base border-border-normal text-secondary-dark placeholder:text-secondary-2',
-                classesForSize,
-                classesForAlignText,
-            )}
-        />
+        <div className="relative">
+            <div className={cn(actionClassName, 'left-2')}>
+                {actionsLeft?.map((action, index) => (
+                    <InputAction key={index} {...action} />
+                ))}
+            </div>
+            <input
+                {...otherProps}
+                className={cn(
+                    className,
+                    'bg-white border rounded-lg px-6 py-4 text-base border-border-normal text-secondary-dark placeholder:text-secondary-2',
+                    classesForSize,
+                    classesForAlignText,
+                )}
+            />
+            <div className={cn(actionClassName, 'right-2')}>
+                {actionsRight?.map((action, index) => (
+                    <InputAction key={index} {...action} />
+                ))}
+            </div>
+        </div>
     );
 };
 
