@@ -4,7 +4,7 @@ runs:
     using: 'composite'
     steps:
         - name: Setup Node.js ⚙️
-          uses: actions/setup-node@v4
+          uses: actions/setup-node@v2
           with:
               node-version: 20
 
@@ -13,9 +13,9 @@ runs:
           uses: actions/cache@v3
           with:
               path: node_modules
-              key: node-modules-${{ hashFiles('package-lock.json') }}
+              key: node-modules-${{ hashFiles('yarn.lock') }}
 
         - name: Install dependencies 🔧
           shell: bash
           if: steps.cache_dependencies.outputs.cache-hit != 'true'
-          run: npm ci
+          run: yarn install --frozen-lockfile

@@ -1,11 +1,9 @@
-# this should be Github action to build next js app and check for TypeScript errors when making pull request
-
 name: build-and-check
 
 on:
     pull_request:
         branches:
-            - master
+            - main
 
 permissions:
     contents: read
