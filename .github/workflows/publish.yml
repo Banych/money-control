@@ -33,7 +33,7 @@ jobs:
                   static_site_generator: next
 
             - name: Build with Next.js 🏗️
-              run: ${{ steps.setup-node.outputs.detect-package-manager.runner }} next build
+              run: npx next build
 
             - name: Upload artifact 📡
               uses: actions/upload-pages-artifact@v3
