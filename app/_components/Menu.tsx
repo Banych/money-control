@@ -18,12 +18,12 @@ export const Menu: React.FC<PropsWithChildren> = ({ children }) => {
                 <MenuItemsList />
             </section>
 
-            <section className="flex-1">
+            <section className="flex-1 flex flex-col">
                 <PageHeader
                     title={isPageHeaderTitleShown ? 'Welcome' : undefined}
                     date={new Date()}
                 />
-                <div className="pt-4 pr-8 pb-[34px] pl-6 overflow-auto">
+                <div className="pt-4 pr-8 pb-[34px] pl-6 overflow-auto flex flex-col grow">
                     {children}
                 </div>
             </section>

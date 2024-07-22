@@ -17,6 +17,7 @@ const NumberTableCell = <T extends DataType>({
     column,
     row,
     onChange,
+    ...otherProps
 }: NumberTableCellProps<T>) => {
     const handleChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,21 +32,20 @@ const NumberTableCell = <T extends DataType>({
 
     return (
         <TableCell
+            {...otherProps}
             column={column}
             row={row}
             renderCell={(row, column) => (
-                <>
-                    <Input
-                        type="number"
-                        size="sm"
-                        alignText="right"
-                        min={MINIMUM_QTY}
-                        max={MAXIMUM_QTY}
-                        value={row[column.key] as number}
-                        className="max-w-[50px]"
-                        onChange={handleChange}
-                    />
-                </>
+                <Input
+                    type="number"
+                    size="sm"
+                    alignText="right"
+                    min={MINIMUM_QTY}
+                    max={MAXIMUM_QTY}
+                    value={row[column.key] as number}
+                    className="max-w-[50px]"
+                    onChange={handleChange}
+                />
             )}
         />
     );

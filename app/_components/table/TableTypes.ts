@@ -1,3 +1,5 @@
+import { ClassValue } from 'clsx';
+
 export type IDable<T = Record<string, never>> = T & { id: string };
 
 export type DataType = {
@@ -7,5 +9,6 @@ export type DataType = {
 export type TableColumn<T extends DataType> = {
     title: string;
     key: keyof T | 'actions';
-    type: 'text' | 'number' | 'date' | 'actions';
+    type: 'text' | 'input' | 'number' | 'date' | 'actions';
+    cellClassName?: ClassValue;
 };

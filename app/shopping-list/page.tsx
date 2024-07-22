@@ -20,10 +20,30 @@ export default function ShoppingList() {
 
     const columns = useMemo(
         (): TableColumn<Good>[] => [
-            { title: 'Name', key: 'name', type: 'text' },
-            { title: 'Quantity', key: 'quantity', type: 'number' },
-            { title: 'Unit', key: 'unit', type: 'text' },
-            { title: 'Categories', key: 'categories', type: 'text' },
+            {
+                title: 'Name',
+                key: 'name',
+                type: 'input',
+                cellClassName: 'w-full',
+            },
+            {
+                title: 'Quantity',
+                key: 'quantity',
+                type: 'number',
+                cellClassName: 'min-w-48 w-0',
+            },
+            {
+                title: 'Unit',
+                key: 'unit',
+                type: 'text',
+                cellClassName: 'min-w-48 w-0',
+            },
+            {
+                title: 'Categories',
+                key: 'categories',
+                type: 'text',
+                cellClassName: 'min-w-48 w-0',
+            },
             { title: '', key: 'actions', type: 'actions' },
         ],
         [],
@@ -31,8 +51,8 @@ export default function ShoppingList() {
 
     const onItemChange = useCallback(
         (value: string | number, row: Good, column: TableColumn<Good>) => {
-            setGoods(
-                mockGoods.map((good) => {
+            setGoods((prevState) =>
+                prevState.map((good): Good => {
                     if (good.id === row.id) {
                         return { ...good, [column.key]: value };
                     }
@@ -44,13 +64,14 @@ export default function ShoppingList() {
     );
 
     return (
-        <main className="h-full">
+        <main className="grow gap-4 flex flex-col">
             <PageTitle>Shopping List</PageTitle>
             <Table
                 columns={columns}
                 data={goods}
                 getRowKey={(row) => row.id}
                 onChange={onItemChange}
+                className="min-w-48"
             />
         </main>
     );
