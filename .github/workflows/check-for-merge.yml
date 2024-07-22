@@ -1,0 +1,27 @@
+# this should be Github action to build next js app and check for TypeScript errors when making pull request
+
+name: build-and-check
+
+on:
+    pull_request:
+        branches:
+            - master
+
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout 🛎️
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+              uses: ./.github/workflows/setup-node
+
+            - name: Build with Next.js 🏗️
+              run: npx next build
