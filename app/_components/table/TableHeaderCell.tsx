@@ -14,7 +14,7 @@ const TableHeaderCell = <T extends DataType>({
     return (
         <th
             className={cn(
-                'px-3 first-of-type:pl-0 last-of-type:pr-0 py-4 whitespace-nowrap text-sm text-gray-500 border-b border-border-light',
+                'px-4 py-6 first-of-type:pl-0 last-of-type:pr-0 whitespace-nowrap text-base font-bold text-gray-900 border-b border-border-light',
                 'text-center first-of-type:text-left last-of-type:text-right',
                 className,
             )}

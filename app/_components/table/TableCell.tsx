@@ -1,5 +1,6 @@
 import { DataType, TableColumn } from './TableTypes';
 import { cn } from '../../../utils/cn';
+import { ClassValue } from 'clsx';
 
 type TableParticularProps<T extends DataType> = {
     row: T;
@@ -8,7 +9,7 @@ type TableParticularProps<T extends DataType> = {
 };
 
 export type TableCellProps<T extends DataType> = TableParticularProps<T> & {
-    className?: string;
+    className?: ClassValue;
     column: TableColumn<T>;
 };
 

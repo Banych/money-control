@@ -20,10 +20,30 @@ export default function ShoppingList() {
 
     const columns = useMemo(
         (): TableColumn<Good>[] => [
-            { title: 'Name', key: 'name', type: 'input' },
-            { title: 'Quantity', key: 'quantity', type: 'number' },
-            { title: 'Unit', key: 'unit', type: 'text' },
-            { title: 'Categories', key: 'categories', type: 'text' },
+            {
+                title: 'Name',
+                key: 'name',
+                type: 'input',
+                cellClassName: 'w-full',
+            },
+            {
+                title: 'Quantity',
+                key: 'quantity',
+                type: 'number',
+                cellClassName: 'min-w-48 w-0',
+            },
+            {
+                title: 'Unit',
+                key: 'unit',
+                type: 'text',
+                cellClassName: 'min-w-48 w-0',
+            },
+            {
+                title: 'Categories',
+                key: 'categories',
+                type: 'text',
+                cellClassName: 'min-w-48 w-0',
+            },
             { title: '', key: 'actions', type: 'actions' },
         ],
         [],
@@ -51,6 +71,7 @@ export default function ShoppingList() {
                 data={goods}
                 getRowKey={(row) => row.id}
                 onChange={onItemChange}
+                className="min-w-48"
             />
         </main>
     );

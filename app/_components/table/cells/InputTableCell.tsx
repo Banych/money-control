@@ -1,27 +1,39 @@
 'use client';
 
-import { MouseEvent, useCallback, useState } from 'react';
+import {
+    InputHTMLAttributes,
+    MouseEvent,
+    useCallback,
+    useRef,
+    useState,
+} from 'react';
 import Input from '../../Input';
 import TableCell, { TableCellProps } from '../TableCell';
 import { DataType } from '../TableTypes';
 import { cn } from '../../../../utils/cn';
 import { InputAction } from '../types/input';
-import { MdCheck, MdCheckBox, MdClose } from 'react-icons/md';
+import { MdCheck, MdClose } from 'react-icons/md';
 
-export type TextInputTableCellProps<T extends DataType> = Omit<
+export type InputTableCellProps<T extends DataType> = Omit<
     TableCellProps<T>,
     'renderCell'
->;
+> & {
+    inputProps?: InputHTMLAttributes<HTMLInputElement>;
+};
 
 const TextInputTableCell = <T extends DataType>({
     column,
     row,
     onChange,
-}: TextInputTableCellProps<T>) => {
+    inputProps,
+    className,
+    ...otherProps
+}: InputTableCellProps<T>) => {
     const [isEdit, setIsEdit] = useState(false);
+    const [value, setValue] = useState(row[column.key] as string);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e.target.value, row, column);
+        setValue(e.target.value);
     };
 
     const handleEnterEdit = useCallback((e: MouseEvent<HTMLAnchorElement>) => {
@@ -33,9 +45,13 @@ const TextInputTableCell = <T extends DataType>({
         (e: React.KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
                 setIsEdit(false);
+                onChange?.(value, row, column);
+            } else if (e.key === 'Escape') {
+                setIsEdit(false);
+                setValue(row[column.key] as string);
             }
         },
-        [],
+        [column, onChange, row, value],
     );
 
     const inputActions: InputAction[] = [
@@ -55,12 +71,24 @@ const TextInputTableCell = <T extends DataType>({
         },
     ];
 
-    if (!isEdit) {
-        return (
-            <TableCell
-                column={column}
-                row={row}
-                renderCell={(row, column) => (
+    return (
+        <TableCell
+            {...otherProps}
+            column={column}
+            row={row}
+            className={cn(className, isEdit && 'text-left py-1')}
+            renderCell={(row, column) =>
+                isEdit ? (
+                    <Input
+                        {...inputProps}
+                        size="sm"
+                        className="w-full"
+                        defaultValue={value}
+                        onChange={handleChange}
+                        onKeyUp={handleExitEdit}
+                        actions={inputActions}
+                    />
+                ) : (
                     <a
                         className={cn(
                             'w-full',
@@ -70,26 +98,8 @@ const TextInputTableCell = <T extends DataType>({
                     >
                         {row[column.key]}
                     </a>
-                )}
-            />
-        );
-    }
-
-    return (
-        <TableCell
-            column={column}
-            row={row}
-            renderCell={(row, column) => (
-                <Input
-                    type="text"
-                    size="sm"
-                    value={row[column.key] as string}
-                    className="w-full"
-                    onChange={handleChange}
-                    onKeyUp={handleExitEdit}
-                    actions={inputActions}
-                />
-            )}
+                )
+            }
         />
     );
 };
