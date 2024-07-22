@@ -12,12 +12,7 @@ export type PageHeaderProps = {
     showSearch?: boolean;
 };
 
-const PageHeader: FC<PageHeaderProps> = ({
-    date,
-    title,
-    className,
-    showSearch = false,
-}) => {
+const PageHeader: FC<PageHeaderProps> = ({ date, title, className }) => {
     const formattedDate = useMemo(() => {
         return dayjs(date).format('MMMM D, YYYY');
     }, [date]);

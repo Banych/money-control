@@ -1,12 +1,6 @@
 'use client';
 
-import {
-    InputHTMLAttributes,
-    MouseEvent,
-    useCallback,
-    useRef,
-    useState,
-} from 'react';
+import { InputHTMLAttributes, MouseEvent, useCallback, useState } from 'react';
 import Input from '../../Input';
 import TableCell, { TableCellProps } from '../TableCell';
 import { DataType } from '../TableTypes';

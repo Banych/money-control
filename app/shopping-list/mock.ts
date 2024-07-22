@@ -1,3 +1,5 @@
+import { Good } from '@/app/shopping-list/page';
+
 export const mockGoods: Good[] = [
     {
         id: '1',
