@@ -22,6 +22,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+              id: setup-node
               uses: ./.github/workflows/setup-node
 
             - name: Setup Pages ⚙️
@@ -30,9 +31,7 @@ jobs:
                   static_site_generator: next
 
             - name: Build with Next.js 🏗️
-              run: |
-                  npx next build
-                  npx next export
+              run: ${{ steps.setup-node.outputs.detect-package-manager.outputs.runner }} next build
 
             - name: Upload artifact 📡
               uses: actions/upload-pages-artifact@v3
@@ -45,6 +44,7 @@ jobs:
             url: ${{ steps.deployment.outputs.page_url }}
 
         runs-on: ubuntu-latest
+
         needs: build
 
         steps:
