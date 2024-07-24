@@ -23,4 +23,4 @@ jobs:
               uses: ./.github/workflows/setup-node
 
             - name: Build with Next.js 🏗️
-              run: ${{ steps.setup-node.outputs.runner-command }} next build
+              run: yarn build

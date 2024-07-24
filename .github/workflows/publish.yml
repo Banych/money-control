@@ -24,7 +24,6 @@ jobs:
               # inside there is a step with the id detect-package-manager
               # how can I setup this step to be able to reach out detect-package-manager step?
             - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
-              id: setup-node
               uses: ./.github/workflows/setup-node
 
             - name: Setup Pages ⚙️
@@ -33,12 +32,12 @@ jobs:
                   static_site_generator: next
 
             - name: Build with Next.js 🏗️
-              run: ${{ steps.setup-node.outputs.runner-command }} build
+              run: yarn build
 
             - name: Upload artifact 📡
               uses: actions/upload-pages-artifact@v3
               with:
-                  path: ./build
+                  path: ./out
 
     deploy:
         environment:
