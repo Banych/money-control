@@ -19,7 +19,8 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+              id: setup-node
               uses: ./.github/workflows/setup-node
 
             - name: Build with Next.js 🏗️
-              run: npx next build
+              run: ${{ steps.setup-node.outputs.runner-command }} next build
