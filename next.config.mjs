@@ -2,7 +2,7 @@
 const nextConfig = {
     output: 'export',
     basePath: '/money-control',
-    distDir: './build',
+    reactStrictMode: true,
 };
 
 export default nextConfig;
