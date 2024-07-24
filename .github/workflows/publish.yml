@@ -21,15 +21,28 @@ jobs:
             - name: Checkout 🛎️
               uses: actions/checkout@v4
 
-              # inside there is a step with the id detect-package-manager
-              # how can I setup this step to be able to reach out detect-package-manager step?
-            - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
-              uses: ./.github/workflows/setup-node
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+                  cache: yarn
 
             - name: Setup Pages ⚙️
-              uses: actions/configure-pages@v4
+              uses: actions/configure-pages@v5
               with:
                   static_site_generator: next
+
+            - name: Restore cache
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      .next/cache
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+                  restore-keys: |
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+
+            - name: Install dependencies
+              run: yarn install
 
             - name: Build with Next.js 🏗️
               run: npx next build
