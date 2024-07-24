@@ -1,6 +1,12 @@
 'use client';
 
-import { InputHTMLAttributes, MouseEvent, useCallback, useState } from 'react';
+import {
+    InputHTMLAttributes,
+    MouseEvent,
+    useCallback,
+    useMemo,
+    useState,
+} from 'react';
 import Input from '../../Input';
 import TableCell, { TableCellProps } from '../TableCell';
 import { DataType } from '../TableTypes';
@@ -35,35 +41,46 @@ const TextInputTableCell = <T extends DataType>({
         setIsEdit(true);
     }, []);
 
-    const handleExitEdit = useCallback(
+    const handleApplyChanges = useCallback(() => {
+        setIsEdit(false);
+        onChange?.(value, row, column);
+    }, [column, onChange, row, value]);
+
+    const handleCancelChanges = useCallback(() => {
+        setIsEdit(false);
+        setValue(row[column.key] as string);
+    }, [column, row]);
+
+    const handleKeyUpInput = useCallback(
         (e: React.KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
-                setIsEdit(false);
-                onChange?.(value, row, column);
+                handleApplyChanges();
             } else if (e.key === 'Escape') {
-                setIsEdit(false);
-                setValue(row[column.key] as string);
+                handleCancelChanges();
             }
         },
-        [column, onChange, row, value],
+        [handleApplyChanges, handleCancelChanges],
     );
 
-    const inputActions: InputAction[] = [
-        {
-            icon: MdCheck,
-            position: 'right',
-            callback: () => setIsEdit(false),
-            actionClassName: 'text-green-500',
-            size: 'sm',
-        },
-        {
-            icon: MdClose,
-            position: 'right',
-            callback: () => setIsEdit(false),
-            actionClassName: 'text-red-500',
-            size: 'sm',
-        },
-    ];
+    const inputActions = useMemo(
+        (): InputAction[] => [
+            {
+                icon: MdCheck,
+                position: 'right',
+                callback: handleApplyChanges,
+                actionClassName: 'text-green-500',
+                size: 'sm',
+            },
+            {
+                icon: MdClose,
+                position: 'right',
+                callback: handleCancelChanges,
+                actionClassName: 'text-red-500',
+                size: 'sm',
+            },
+        ],
+        [handleApplyChanges, handleCancelChanges],
+    );
 
     return (
         <TableCell
@@ -79,7 +96,7 @@ const TextInputTableCell = <T extends DataType>({
                         className="w-full"
                         defaultValue={value}
                         onChange={handleChange}
-                        onKeyUp={handleExitEdit}
+                        onKeyUp={handleKeyUpInput}
                         actions={inputActions}
                     />
                 ) : (

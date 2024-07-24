@@ -4,6 +4,7 @@ import { DataType, TableColumn } from './TableTypes';
 import TextTableCell from './cells/TextTableCell';
 import InputTableCell from './cells/InputTableCell';
 import { cn } from '@/utils/cn';
+import { ActionsCell } from '@/app/_components/table/cells/ActionsCell';
 
 export type TableRowProps<T extends DataType> = {
     columns: TableColumn<T>[];
@@ -53,6 +54,13 @@ const TableRow = <T extends DataType>(props: TableRowProps<T>) => {
                             inputProps={{
                                 type: 'text',
                             }}
+                        />
+                    );
+                case 'actions':
+                    return (
+                        <ActionsCell
+                            {...cellProps}
+                            key={getCellKey(row, column)}
                         />
                     );
                 default:

@@ -27,5 +27,8 @@ jobs:
             - name: Install dependencies
               run: yarn install
 
+            - name: Typecheck with TypeScript 🏷️
+              run: yarn typecheck
+
             - name: Build with Next.js 🏗️
               run: yarn build

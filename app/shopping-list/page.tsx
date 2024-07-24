@@ -5,6 +5,7 @@ import { mockGoods } from './mock';
 import { useCallback, useMemo, useState } from 'react';
 import Table from '../_components/table/Table';
 import { TableColumn } from '../_components/table/TableTypes';
+import { MdClose } from 'react-icons/md';
 
 export type Good = {
     id: string;
@@ -44,7 +45,23 @@ export default function ShoppingList() {
                 type: 'text',
                 cellClassName: 'min-w-48 w-0',
             },
-            { title: '', key: 'actions', type: 'actions' },
+            {
+                title: '',
+                key: 'id',
+                type: 'actions',
+                actions: [
+                    {
+                        key: 'delete',
+                        label: 'Delete',
+                        icon: MdClose,
+                        onClick: (row) => {
+                            setGoods((prevState) =>
+                                prevState.filter((good) => good.id !== row.id),
+                            );
+                        },
+                    },
+                ],
+            },
         ],
         [],
     );
