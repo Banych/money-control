@@ -10,6 +10,7 @@ const config: Config = {
         extend: {
             colors: {
                 primary: '#299D91',
+                'primary-darker': '#1E7D6A',
                 'main-bg': '#F4F5F7',
                 secondary: '#9F9F9F',
                 'secondary-dark': '#4A4A4A',
@@ -18,6 +19,8 @@ const config: Config = {
                 'secondary-70': 'rgba(255, 255, 255, 0.7)',
                 'border-light': '#E8E8E8',
                 'border-normal': '#D1D1D1',
+                'secondary2-10': 'rgba(151, 151, 151, 0.1)',
+                'secondary2-70': 'rgba(151, 151, 151, 0.7)',
             },
         },
     },
