@@ -1,5 +1,6 @@
 name: setup-node
 description: 'Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧'
+
 runs:
     using: 'composite'
     steps:
@@ -42,3 +43,14 @@ runs:
         - name: Install dependencies 🔧
           shell: bash
           run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+outputs:
+    package-manager:
+        description: 'The detected package manager'
+        value: ${{ steps.detect-package-manager.outputs.manager }}
+    package-install-command:
+        description: 'The command to install dependencies'
+        value: ${{ steps.detect-package-manager.outputs.command }}
+    runner-command:
+        description: 'The command runner'
+        value: ${{ steps.detect-package-manager.outputs.runner }}
